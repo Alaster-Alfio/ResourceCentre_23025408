@@ -1,10 +1,9 @@
-class Camera():
+from inventory.item import Item
+
+class Camera(Item):
 
     def __init__(self, assetTag, description, opticalZoom):
-        self._assetTag = assetTag
-        self._description = description
-        self._dueDate = ""
-        self._isAvailable = True
+        super().__init__(assetTag, description)
         self._opticalZoom = opticalZoom
 
     def __str__(self):
