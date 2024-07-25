@@ -6,20 +6,37 @@ class Inventory():
         self.cameraList = []
         self.laptopList = []
 
+    def findAsset(self, assetTag):
+        # Refractor (C): Extract long methods to findCamera(assetTag),
+        # return the found camera, return None if not found.
+        # **Don't forget to create test case for this new method.
+        # Check for existing camera
+        foundAsset = None
+        for c in self.cameraList:
+            currentTag = c.getAssetTag()
+            if currentTag == assetTag:
+                foundAsset = c  
+        for c in self.laptopList:
+            currentTag = c.getAssetTag()
+            if currentTag == assetTag:
+                foundAsset = c  
+        return foundAsset
+
     def addCamera(self, assetTag, description, opticalzoom):
         correct = True
         if len(assetTag) == 0 or len(description) == 0 or opticalzoom < 0:
             correct = False
             error_message = "Incorrect values."
 
-        notExist = True
-        for c in self.cameraList:
-            currentTag = c.getAssetTag()
-            if currentTag == assetTag:
-                notExist = False
-                error_message = "Asset already exists."
+# Refractor (C): Extract long methods to findCamera(assetTag),
+        # return the found camera, return None if not found.
+        # **Don't forget to create test case for this new method.
+        # Check for existing camera
 
-        if correct and notExist:
+        if self.findAsset(assetTag) != None:
+            error_message = "Asset already exists."
+
+        if correct and self.findAsset(assetTag) == None:
             new_camera = Camera(assetTag, description, opticalzoom)
             self.cameraList.append(new_camera)
             return True
@@ -33,14 +50,14 @@ class Inventory():
             correct = False
             error_message = "Incorrect values."
         
-        notExist = True
-        for l in self.laptopList:
-            currentTag = l.getAssetTag()
-            if currentTag == assetTag:
-                notExist = False
-                error_message = "Asset already exists."
-        
-        if correct and notExist:
+        # Refractor (C): Extract long methods to findCamera(assetTag),
+        # return the found camera, return None if not found.
+        # **Don't forget to create test case for this new method.
+        # Check for existing camera
+        if self.findAsset(assetTag) != None:
+            error_message = "Asset already exists."
+
+        if correct and self.findAsset(assetTag) == None:
             new_laptop = Laptop(assetTag, description, os)
             self.laptopList.append(new_laptop)
             return True
@@ -75,30 +92,23 @@ class Inventory():
                         i.getIsAvailable(), i.getDueDate(), 
                         i.getOS() )
         return output
+    def loanAsset(self, assertTag, dueDate):
+        success = False
+        if len(assertTag) > 0 and len(dueDate) > 0:
+            # Refactor (C): use findAsset()
+            foundAsset = self.findAsset(assertTag)
+            if foundAsset != None:
+                if foundAsset.getIsAvailable() == "Yes":
+                    foundAsset.setIsAvailable(False)
+                    foundAsset.setDueDate(dueDate)
+                    success = True
+        return success
 
     def loanCamera(self, assetTag, dueDate):
-        success = False
-        if len(assetTag) > 0 and len(dueDate) > 0:
-            for i in self.cameraList:
-                if i.getAssetTag() == assetTag:
-                    if i.getIsAvailable() == "Yes":
-                        i.setIsAvailable(False)
-                        i.setDueDate(dueDate)
-                        success = True
-        
-        return success
+        return self.loanAsset(assetTag, dueDate)
     
     def loanLaptop(self, assetTag, dueDate):
-        success = False
-        if len(assetTag) > 0 and len(dueDate) > 0:
-            for i in self.laptopList:
-                if i.getAssetTag() == assetTag:
-                    if i.getIsAvailable() == "Yes":
-                        i.setIsAvailable(False)
-                        i.setDueDate(dueDate)
-                        success = True
-        
-        return success
+        return self.loanAsset(assetTag, dueDate)
 
     def returnCamera(self, assetTag):
         success = False
