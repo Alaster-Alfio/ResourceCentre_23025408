@@ -11,6 +11,11 @@ class Laptop:
         self._isAvailable = True
         self._os = os
 
+    def __str__(self):
+        return "{:<10}{:<30}{:<10}{:<12}{:<10}\n".format(
+            self.getAssetTag(), self.getDescription(),
+            self.getIsAvailable(), self.getDueDate(), self.getOS())
+
     def getAssetTag(self):
         return self._assetTag
 
