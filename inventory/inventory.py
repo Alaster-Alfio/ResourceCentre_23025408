@@ -57,11 +57,8 @@ class Inventory():
         else:
             for i in self.cameraList:
                 if i.getIsAvailable() == "Yes":
-                    output += "{:<10}{:<30}{:<10}{:<12}{:<10}\n".format( 
-                        i.getAssetTag(), i.getDescription(),  
-                        i.getIsAvailable(), i.getDueDate(), 
-                        i.getOpticalZoom() )
-            
+                    output += str(i)
+
         return output
 
     def getAvailableLaptop(self):
