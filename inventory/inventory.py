@@ -7,10 +7,6 @@ class Inventory():
         self.laptopList = []
 
     def findAsset(self, assetTag):
-        # Refractor (C): Extract long methods to findCamera(assetTag),
-        # return the found camera, return None if not found.
-        # **Don't forget to create test case for this new method.
-        # Check for existing camera
         foundAsset = None
         for c in self.cameraList:
             currentTag = c.getAssetTag()
@@ -27,11 +23,6 @@ class Inventory():
         if len(assetTag) == 0 or len(description) == 0 or opticalzoom < 0:
             correct = False
             error_message = "Incorrect values."
-
-# Refractor (C): Extract long methods to findCamera(assetTag),
-        # return the found camera, return None if not found.
-        # **Don't forget to create test case for this new method.
-        # Check for existing camera
 
         if self.findAsset(assetTag) != None:
             error_message = "Asset already exists."
@@ -50,10 +41,6 @@ class Inventory():
             correct = False
             error_message = "Incorrect values."
         
-        # Refractor (C): Extract long methods to findCamera(assetTag),
-        # return the found camera, return None if not found.
-        # **Don't forget to create test case for this new method.
-        # Check for existing camera
         if self.findAsset(assetTag) != None:
             error_message = "Asset already exists."
 
@@ -75,7 +62,6 @@ class Inventory():
             for i in self.cameraList:
                 if i.getIsAvailable() == "Yes":
                     output += str(i)
-
         return output
     
     def getNotAvailableCamera(self):
@@ -88,7 +74,6 @@ class Inventory():
             for i in self.cameraList:
                 if i.getIsAvailable() == "No":
                     output += str(i)
-
         return output
 
     def getAvailableLaptop(self):
@@ -104,7 +89,8 @@ class Inventory():
                         i.getAssetTag(), i.getDescription() , 
                         i.getIsAvailable(), i.getDueDate(), 
                         i.getOS() )
-    
+        return output
+
     def getNotAvailableLaptop(self):
         output = ""
         output += "{:<10}{:<30}{:<10}{:<12}{:<10}\n".format("AssetTag", 
@@ -118,12 +104,11 @@ class Inventory():
                         i.getAssetTag(), i.getDescription() , 
                         i.getIsAvailable(), i.getDueDate(), 
                         i.getOS() )
-
         return output
+
     def loanAsset(self, assertTag, dueDate):
         success = False
         if len(assertTag) > 0 and len(dueDate) > 0:
-            # Refactor (C): use findAsset()
             foundAsset = self.findAsset(assertTag)
             if foundAsset != None:
                 if foundAsset.getIsAvailable() == "Yes":
