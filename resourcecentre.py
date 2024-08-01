@@ -21,11 +21,11 @@ class ResourceCenter:
         return choice
     
     def printHeader(self, message):
-            # Refactor (B): use printHeader(mesage)
-            print("")
-            print("==============================================")
-            print(message)
-            print("==============================================")
+        # Refactor (B): use printHeader(mesage)
+        print("")
+        print("==============================================")
+        print(message)
+        print("==============================================")
 
     def selectItemType(self):
         # Refactor (B): Extract duplicate codes to selectItemType(),
